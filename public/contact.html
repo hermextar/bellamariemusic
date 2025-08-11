@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact • Bella Marie</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script defer src="./site.js"></script>
+  </head>
+  <body class="is-preload">
+    <nav class="topnav" aria-label="Main Navigation">
+      <a class="brand" href="../index.html">Bella Marie</a>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="./about.html">About Me</a></li>
+        <li><a href="./services.html">Services</a></li>
+        <li><a href="./music.html">My Music</a></li>
+        <li><a href="./contact.html" aria-current="page">Contact Me</a></li>
+      </ul>
+    </nav>
+
+    <main>
+      <section class="contact-grid">
+        <div class="form-card">
+          <h1 class="page-title">Contact Me</h1>
+          <form action="#" method="post">
+            <div class="form-grid two-col">
+              <div>
+                <label for="name">Name</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input
+                  class="input"
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label for="subject">Subject</label>
+              <input class="input" type="text" id="subject" name="subject" />
+            </div>
+            <div>
+              <label for="message">Message</label>
+              <textarea
+                class="textarea"
+                id="message"
+                name="message"
+                required
+              ></textarea>
+              <p class="helper">I typically reply within 1–2 business days!</p>
+            </div>
+            <div class="form-actions">
+              <button class="btn" type="submit">Send Message</button>
+            </div>
+          </form>
+        </div>
+
+        <aside class="info-card">
+          <h2>Booking & Inquiries</h2>
+          <ul class="contact-list">
+            <li>
+              <a href="mailto:itsbellasmusic@gmail.com"
+                >itsbellasmusic@gmail.com</a
+              >
+            </li>
+            <li><a href="tel:+15195899098">(519) 589-9098</a></li>
+            <br />
+            <li>
+              <a class="btn" href="https://www.gigsalad.com/bella_marie_guelph"
+                >Book Bella on GigSalad</a
+              >
+            </li>
+          </ul>
+        </aside>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <small>© 2025 Bella Marie. All rights reserved.</small>
+      </div>
+    </footer>
+  </body>
+</html>

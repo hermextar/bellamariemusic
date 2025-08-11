@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bella Marie Music</title>
+    <link rel="stylesheet" href="./public/style.css" />
+    <script defer src="./public/site.js"></script>
+  </head>
+  <body class="is-preload">
+    <nav class="topnav" aria-label="Main Navigation">
+      <a class="brand" href="./index.html">Bella Marie</a>
+      <ul class="nav-links">
+        <li><a href="./public/about.html">About Me</a></li>
+        <li><a href="./public/services.html">Services</a></li>
+        <li><a href="./public/music.html">My Music</a></li>
+        <li><a href="./public/contact.html">Contact Me</a></li>
+      </ul>
+    </nav>
+
+    <header class="hero">
+      <img
+        class="hero-image"
+        src="./assets/profileimage.png"
+        alt="Cover image for Bella Marie's song Atlantic"
+      />
+      <h1>Bella Marie</h1>
+      <p>Listen to my song "Atlantic" on all major streaming platforms!</p>
+    </header>
+    <main>
+      <section class="links">
+        <a
+          href="https://www.gigsalad.com/bella_marie_guelph"
+          class="cta"
+          aria-label="Hire Bella Marie"
+        >
+          <img
+            src="./assets/headshot.png"
+            class="avatar"
+            alt="Headshot of Bella Marie"
+          />
+          <span>Hire me!</span>
+        </a>
+        <div class="button-grid">
+          <a
+            href="https://open.spotify.com/track/0nQ9eesdz0rxn8Uet0nKn8?si=24149fb3bdde4bf9"
+            class="btn"
+            >Spotify</a
+          >
+          <a
+            href="https://music.apple.com/ca/album/slow-release/1603741877?i=1603741880"
+            class="btn"
+            >Apple Music</a
+          >
+          <a href="https://www.instagram.com/bellsmarie_/" class="btn"
+            >Instagram</a
+          >
+          <a href="https://vm.tiktok.com/ZMeSscrDk/" class="btn">TikTok</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <small>© 2025 Bella Marie. All rights reserved.</small>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.querySelectorAll("a.btn, a.cta").forEach((a) => {
+          a.target = "_blank";
+          // Ensure security best practices for new tabs
+          const rel = (a.getAttribute("rel") || "").split(" ").filter(Boolean);
+          if (!rel.includes("noopener")) rel.push("noopener");
+          if (!rel.includes("noreferrer")) rel.push("noreferrer");
+          a.setAttribute("rel", rel.join(" "));
+        });
+      });
+    </script>
+  </body>
+</html>
