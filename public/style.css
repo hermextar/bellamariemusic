@@ -36,11 +36,20 @@ html,
 body {
   margin: 0;
   padding: 0;
+  overflow-x: hidden; /* prevent horizontal scrolling revealing off-canvas UI */
 }
 img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+/* Do not render mobile drawer UI on desktop */
+@media (min-width: 721px) {
+  .drawer-backdrop,
+  .mobile-drawer {
+    display: none !important;
+  }
 }
 
 /* Base */
