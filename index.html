@@ -83,11 +83,24 @@
     </aside>
 
     <header class="hero">
-      <img
+      <!-- Replaced image with looping inline video; inherits .hero-image styles -->
+      <video
         class="hero-image"
-        src="./assets/profileimage.png"
-        alt="Cover image for Bella Marie's song Atlantic"
-      />
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+        poster="./assets/profileimage.png"
+        aria-label="Cover video for Bella Marie's song Atlantic"
+      >
+        <source src="./assets/atlanticcover.mp4" type="video/mp4" />
+        <source src="./assets/atlanticcover.mov" type="video/quicktime" />
+        <img
+          src="./assets/profileimage.png"
+          alt="Cover image for Bella Marie's song Atlantic"
+        />
+      </video>
       <h1>Bella Marie</h1>
       <p>Listen to my song "Atlantic" on all major streaming platforms!</p>
     </header>
