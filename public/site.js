@@ -1,6 +1,8 @@
 // Global behavior for button-style links
 // Opens button links in a new tab and applies safe rel attributes.
 (function () {
+  // ...existing code...
+
   function enhanceButtonLinks(root = document) {
     const links = root.querySelectorAll("a.btn, a.cta");
     links.forEach((a) => {
@@ -49,12 +51,104 @@
     document.body.classList.add("is-exiting");
     setTimeout(() => {
       window.location.href = a.href;
-    }, 240); // slightly longer for a smoother feel
+    }, 240);
   });
+
+  // Mobile drawer navigation
+  function initMobileNav() {
+    const toggle = document.querySelector(".menu-toggle");
+    const drawer = document.getElementById("mobile-drawer");
+    const backdrop = document.querySelector(".drawer-backdrop");
+    const closeBtn = document.querySelector(".menu-close");
+    if (!toggle || !drawer || !backdrop || !closeBtn) return;
+
+    let lastFocused = null;
+
+    function getFocusable() {
+      return Array.from(
+        drawer.querySelectorAll(
+          'a, button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        )
+      ).filter((el) => !el.hasAttribute("disabled"));
+    }
+
+    function trapTab(e) {
+      if (!document.body.classList.contains("nav-open")) return;
+      if (e.key !== "Tab") return;
+      const focusables = getFocusable();
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    function onKeydown(e) {
+      if (e.key === "Escape") {
+        close();
+      } else {
+        trapTab(e);
+      }
+    }
+
+    function open() {
+      if (document.body.classList.contains("nav-open")) return;
+      lastFocused = document.activeElement;
+      document.body.classList.add("nav-open");
+      drawer.setAttribute("aria-hidden", "false");
+      toggle.setAttribute("aria-expanded", "true");
+      backdrop.removeAttribute("hidden");
+      const focusables = getFocusable();
+      (focusables[0] || closeBtn).focus();
+      document.addEventListener("keydown", onKeydown);
+    }
+
+    function close() {
+      if (!document.body.classList.contains("nav-open")) return;
+      document.body.classList.remove("nav-open");
+      drawer.setAttribute("aria-hidden", "true");
+      toggle.setAttribute("aria-expanded", "false");
+      backdrop.setAttribute("hidden", "");
+      document.removeEventListener("keydown", onKeydown);
+      if (lastFocused && typeof lastFocused.focus === "function") {
+        lastFocused.focus();
+      } else {
+        toggle.focus();
+      }
+    }
+
+    toggle.addEventListener("click", () => {
+      const expanded = toggle.getAttribute("aria-expanded") === "true";
+      if (expanded) close();
+      else open();
+    });
+
+    closeBtn.addEventListener("click", close);
+    backdrop.addEventListener("click", close);
+
+    // Close when a drawer link is activated
+    drawer.addEventListener("click", (e) => {
+      const a = e.target.closest("a");
+      if (!a) return;
+      // Let page transition handler run; just close immediately for UX
+      close();
+    });
+
+    // Ensure drawer closes if resizing above breakpoint
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 720) close();
+    });
+  }
 
   // Initialize features when DOM is ready
   function init() {
     enhanceButtonLinks();
+    initMobileNav();
   }
 
   if (document.readyState === "loading") {

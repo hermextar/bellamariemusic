@@ -17,7 +17,69 @@
         <li><a href="./music.html">My Music</a></li>
         <li><a href="./contact.html" aria-current="page">Contact Me</a></li>
       </ul>
+      <button
+        class="menu-toggle"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-drawer"
+      >
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            d="M4 7h16M4 12h16M4 17h16"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+      </button>
     </nav>
+
+    <div class="drawer-backdrop" hidden></div>
+    <aside
+      id="mobile-drawer"
+      class="mobile-drawer"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Mobile Menu"
+    >
+      <div class="drawer-header">
+        <a class="brand" href="../index.html">Bella Marie</a>
+        <button class="menu-close" aria-label="Close menu">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M6 6l12 12M18 6l-12 12"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </button>
+      </div>
+      <nav class="drawer-nav" aria-label="Mobile Navigation">
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="./about.html">About Me</a></li>
+          <li><a href="./services.html">Services</a></li>
+          <li><a href="./music.html">My Music</a></li>
+          <li><a href="./contact.html">Contact Me</a></li>
+        </ul>
+      </nav>
+    </aside>
 
     <main>
       <section class="contact-grid">
