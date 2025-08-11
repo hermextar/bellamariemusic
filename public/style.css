@@ -265,6 +265,26 @@ a:focus-visible {
   font-weight: 600;
 }
 
+/* Mobile nav tweaks */
+@media (max-width: 720px) {
+  .topnav {
+    flex-wrap: wrap;
+    padding: 10px 12px;
+  }
+  .topnav .brand {
+    margin-bottom: 4px;
+  }
+  .topnav .nav-links {
+    flex-basis: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 10px; /* row x column */
+  }
+  .topnav .nav-links a {
+    padding: 6px 8px;
+  }
+}
+
 /* Footer */
 .site-footer {
   border-top: 1px solid var(--border);
