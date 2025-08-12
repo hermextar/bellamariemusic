@@ -20,9 +20,57 @@
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
         document.body.classList.remove("is-preload");
+        attemptHeroVideoAutoplay();
       })
     );
   });
+
+  // Attempt to autoplay hero video with retries and fallbacks
+  function attemptHeroVideoAutoplay() {
+    const v = document.querySelector("video.hero-image");
+    if (!v) return;
+    // Don't autoplay if user prefers reduced motion
+    const prefersReduce = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReduce) return;
+
+    let tries = 0;
+    const maxTries = 4;
+
+    function tryPlay(delay = 0) {
+      if (tries >= maxTries) return;
+      tries++;
+      setTimeout(() => {
+        const p = v.play();
+        if (p && typeof p.then === "function") {
+          p.catch(() => {
+            // Mark failure for potential CSS fallback
+            v.dataset.autoplay = "failed";
+          });
+        }
+      }, delay);
+    }
+
+    if (v.readyState >= 2) tryPlay();
+    else v.addEventListener("loadeddata", () => tryPlay(0), { once: true });
+
+    // Retry on visibility change (e.g., returning to tab)
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && v.paused) tryPlay(0);
+    });
+
+    // One-time user gesture fallback (first interaction)
+    ["touchstart", "click", "scroll"].forEach((evt) => {
+      window.addEventListener(
+        evt,
+        () => {
+          if (v.paused) tryPlay(0);
+        },
+        { once: true, passive: true }
+      );
+    });
+  }
 
   // Subtle transition on in-site navigation
   function isInternalLink(a) {

@@ -83,14 +83,17 @@
     </aside>
 
     <header class="hero">
-      <!-- Replaced image with looping inline video; inherits .hero-image styles -->
+      <!-- Replaced image with looping inline video; updated attributes for stronger mobile autoplay support -->
       <video
         class="hero-image"
+        width="220"
+        height="220"
         autoplay
         muted
         loop
         playsinline
-        preload="metadata"
+        webkit-playsinline
+        preload="auto"
         poster="./assets/profileimage.png"
         aria-label="Cover video for Bella Marie's song Atlantic"
       >
