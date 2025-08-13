@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Document metadata & global assets (CSS + JS) -->
+    <!-- Title used in browser tab & for SEO -->
+    <!-- Stylesheet: global design system & layout -->
+    <!-- Script (deferred): navigation, autoplay logic, accessibility helpers -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bella Marie Music</title>
@@ -8,8 +12,11 @@
     <script defer src="./public/site.js"></script>
   </head>
   <body class="is-preload">
+    <!-- Sticky top navigation (desktop inline links + mobile toggle button) -->
     <nav class="topnav" aria-label="Main Navigation">
+      <!-- Brand link returns to home -->
       <a class="brand" href="./index.html">Bella Marie</a>
+      <!-- Inline nav links hidden under 720px (see CSS) -->
       <ul class="nav-links">
         <li><a href="./public/about.html">About Me</a></li>
         <li><a href="./public/services.html">Services</a></li>
@@ -22,7 +29,7 @@
         aria-expanded="false"
         aria-controls="mobile-drawer"
       >
-        <!-- Simple hamburger icon -->
+        <!-- Simple hamburger icon (3 horizontal lines) -->
         <svg
           width="22"
           height="22"
@@ -41,7 +48,7 @@
       </button>
     </nav>
 
-    <!-- Backdrop and Drawer (shared on all pages via site.js behavior) -->
+    <!-- Backdrop (click to close) + full-screen mobile drawer (shown under 721px) -->
     <div class="drawer-backdrop" hidden></div>
     <aside
       id="mobile-drawer"
@@ -52,7 +59,9 @@
       aria-label="Mobile Menu"
     >
       <div class="drawer-header">
+        <!-- Drawer brand repeats for orientation -->
         <a class="brand" href="./index.html">Bella Marie</a>
+        <!-- Close button (ESC key also works) -->
         <button class="menu-close" aria-label="Close menu">
           <svg
             width="22"
@@ -72,6 +81,7 @@
         </button>
       </div>
       <nav class="drawer-nav" aria-label="Mobile Navigation">
+        <!-- Navigation list duplicated for mobile (could be generated server-side in larger apps) -->
         <ul>
           <li><a href="./index.html">Home</a></li>
           <li><a href="./public/about.html">About Me</a></li>
@@ -83,7 +93,9 @@
     </aside>
 
     <header class="hero">
-      <!-- Replaced image with looping inline video; updated attributes for stronger mobile autoplay support -->
+      <!-- Hero media: small looping video (muted + playsinline enables mobile autoplay) -->
+      <!-- Poster displays while video loads or if autoplay fails -->
+      <!-- aria-label describes media purpose for screen readers -->
       <video
         class="hero-image"
         width="220"
@@ -97,23 +109,30 @@
         poster="./assets/profileimage.png"
         aria-label="Cover video for Bella Marie's song Atlantic"
       >
-        <source src="./assets/atlanticcover.mp4" type="video/mp4" />
-        <source src="./assets/atlanticcover.mov" type="video/quicktime" />
+        <!-- Preferred source first (MP4 broadly supported) -->
+        <source src="./assets/atlanticcoversecondaryHR.mp4" type="video/mp4" />
+        <!-- MOV provided as secondary/fallback -->
+        <source src="./assets/atlanticcovers.mov" type="video/quicktime" />
+        <!-- <img> inside <video> = fallback image if neither format loads -->
         <img
           src="./assets/profileimage.png"
           alt="Cover image for Bella Marie's song Atlantic"
         />
       </video>
+      <!-- Primary site heading (artist name) -->
       <h1>Bella Marie</h1>
+      <!-- Supporting tagline / call to listen -->
       <p>Listen to my song "Atlantic" on all major streaming platforms!</p>
     </header>
     <main>
+      <!-- Links section: prominent CTA (hire) + platform/social buttons -->
       <section class="links">
         <a
           href="https://www.gigsalad.com/bella_marie_guelph"
           class="cta"
           aria-label="Hire Bella Marie"
         >
+          <!-- Avatar image inside pill-shaped CTA -->
           <img
             src="./assets/headshot.png"
             class="avatar"
@@ -122,6 +141,7 @@
           <span>Hire me!</span>
         </a>
         <div class="button-grid">
+          <!-- Streaming + social platform buttons (open in new tabs via script) -->
           <a
             href="https://open.spotify.com/track/0nQ9eesdz0rxn8Uet0nKn8?si=24149fb3bdde4bf9"
             class="btn"
@@ -141,12 +161,15 @@
     </main>
 
     <footer class="site-footer">
+      <!-- Footer: copyright text (auto-updated manually) -->
       <div class="footer-inner">
         <small>© 2025 Bella Marie. All rights reserved.</small>
       </div>
     </footer>
 
     <script>
+      // Inline enhancement: ensures CTA + platform buttons open safely in new tabs
+      // (The main behavior script also re-applies similar logic for robustness.)
       document.addEventListener("DOMContentLoaded", () => {
         document.querySelectorAll("a.btn, a.cta").forEach((a) => {
           a.target = "_blank";
