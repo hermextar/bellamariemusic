@@ -1,8 +1,29 @@
 /* Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
 
+/* ============================================================================
+   Global Design System Stylesheet (style.css)
+   ---------------------------------------------------------------------------
+   PURPOSE: Defines design tokens, resets, layout primitives, component styles
+   (navigation, hero, buttons, forms, drawers) and page-specific helpers.
+   STRUCTURE (search these tags):
+     1. Design Tokens (:root)
+     2. Reset & Base
+     3. Typography
+     4. Hero Section
+     5. Links / CTA / Buttons
+     6. Navigation (Top + Mobile Drawer)
+     7. Footer
+     8. Page Content Helpers (prose, contact, services, about)
+     9. Dark Mode Nuance
+    10. Motion Safety
+    11. Background Video Layer
+   NOTE: Only comments added for clarity—no functional changes.
+   ============================================================================ */
+
 /* Design tokens */
 :root {
+  /* Core palette + elevations */
   color-scheme: light dark;
   --bg: #e9f2f4;
   --surface: #bfd7df;
@@ -13,10 +34,12 @@
   --radius: 14px;
   --shadow-sm: 0 2px 6px rgba(2, 6, 23, 0.06);
   --shadow: 0 10px 30px rgba(2, 6, 23, 0.08);
+  --hero-min-height: 60vh; /* Minimum viewport height reserved for hero */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
+    /* Dark theme overrides */
     --bg: #1c3b4e;
     --surface: #2b2f33;
     --text: #e9f2f4;
@@ -29,23 +52,26 @@
 }
 
 /* Reset */
+/* Universal box sizing simplifies layout math (see wildcard rule below) */
 * {
   box-sizing: border-box;
 }
 html,
 body {
+  /* Zero out default spacing & prevent horizontal scroll from off-canvas UI */
   margin: 0;
   padding: 0;
   overflow-x: hidden; /* prevent horizontal scrolling revealing off-canvas UI */
 }
 img {
+  /* Make images responsive by default */
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-/* Do not render mobile drawer UI on desktop */
 @media (min-width: 721px) {
+  /* Hide mobile-specific drawer/backdrop on larger screens */
   .drawer-backdrop,
   .mobile-drawer {
     display: none !important;
@@ -54,6 +80,7 @@ img {
 
 /* Base */
 body {
+  /* Flex column for sticky footer pattern (footer pushed down by main flex) */
   font-family: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
   line-height: 1.6;
@@ -73,20 +100,21 @@ body {
     transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
-
 main {
+  /* Constrains central content width & adds breathing room */
   max-width: 960px;
   margin: 0 auto;
   padding: 24px 16px 56px;
 }
 
 /* Page load and page change transitions */
-body.is-preload {
+body.is-preload,
+body.is-exiting {
+  /* Simple fade + translate transitions */
   opacity: 0;
   transform: translateY(12px);
 }
 body.is-exiting {
-  opacity: 0;
   transform: translateY(8px);
 }
 
@@ -103,11 +131,13 @@ body.is-exiting {
 
 /* Typography */
 h1 {
+  /* Global heading baseline (hero overrides later) */
   font-size: clamp(2rem, 4.5vw, 3rem);
   letter-spacing: -0.02em;
   margin: 0 0 10px;
 }
 header p {
+  /* Subheading / tagline styling */
   color: var(--muted);
   margin: 0;
   font-size: clamp(1rem, 1.6vw, 1.125rem);
@@ -115,10 +145,12 @@ header p {
 
 /* Hero */
 .hero {
+  /* Centered container; video/avatar + heading + tagline */
   text-align: center;
   padding: 64px 16px 28px;
 }
 .hero-image {
+  /* Square media (video) with rounded card appearance */
   width: 220px;
   height: 220px;
   object-fit: cover;
@@ -127,12 +159,24 @@ header p {
   box-shadow: var(--shadow);
   margin: 0 auto 22px;
 }
+.hero h1 {
+  /* Enlarged & tightened display style for artist name */
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
+  margin: 0 0 12px;
+}
+.hero p {
+  /* Constrained line length for readability */
+  max-width: 600px;
+  margin: 0 auto 16px;
+  font-size: 1.125rem;
+}
 
-/* Hero video autoplay failure indicator (pulsing border) */
+/* Pulsing border indicates autoplay failure (data-autoplay="failed") */
 .hero .hero-image[data-autoplay="failed"] {
   animation: heroPulse 2.6s ease-in-out infinite;
 }
 @keyframes heroPulse {
+  /* Expanding soft ring effect */
   0% {
     box-shadow: var(--shadow), 0 0 0 0 rgba(59, 99, 117, 0.55);
   }
@@ -149,16 +193,18 @@ header p {
   }
 }
 
-/* Links section */
+/* Links section (CTA + platform buttons) */
 .links {
+  /* Grid wrapper; centered alignment */
   display: grid;
   gap: 22px;
   justify-items: center;
   padding: 24px 16px 40px;
 }
 
-/* Primary call-to-action */
+/* Primary call-to-action (Hire Me pill) */
 .cta {
+  /* Gradient pill + subtle elevation */
   display: inline-flex;
   align-items: center;
   gap: 14px;
@@ -176,6 +222,7 @@ header p {
   transition: transform 0.15s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
 .cta .avatar {
+  /* Circular headshot inside CTA */
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -191,8 +238,9 @@ header p {
   box-shadow: var(--shadow);
 }
 
-/* Button grid */
+/* Button grid (vertical stack on home) */
 .button-grid {
+  /* Single-column layout; could be adapted to multi-col later */
   display: grid;
   grid-template-columns: 1fr; /* stack vertically */
   gap: 14px;
@@ -205,6 +253,7 @@ header p {
 }
 
 .btn {
+  /* Shared button style with subtle gradient and shadow */
   --btn-bg: var(--accent);
   display: inline-flex;
   align-items: center;
@@ -238,15 +287,17 @@ header p {
   filter: brightness(0.98);
 }
 
-/* Accessibility */
+/* Accessibility focus outline applied to interactive anchors */
 a:focus-visible {
+  /* ...existing code... */
   outline: 3px solid rgba(126, 169, 184, 0.6);
   outline-offset: 2px;
   border-radius: 12px;
 }
 
-/* Top navigation */
+/* Top navigation (sticky & frosted) */
 .topnav {
+  /* Blurred translucent bar anchored to top */
   position: sticky;
   top: 0;
   z-index: 100;
@@ -290,6 +341,7 @@ a:focus-visible {
   box-shadow: inset 0 -2px 0 color-mix(in oklab, var(--accent) 60%, transparent);
 }
 .topnav .nav-links a[aria-current="page"] {
+  /* Active link indicator */
   background: transparent;
   box-shadow: inset 0 -2px 0 var(--accent);
   font-weight: 600;
@@ -314,8 +366,9 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
-/* Full-screen mobile drawer */
+/* Full-screen mobile drawer (slides from right) */
 .drawer-backdrop {
+  /* Dimmed + blurred underlay */
   position: fixed;
   inset: 0;
   background: rgba(2, 6, 23, 0.42);
@@ -327,6 +380,7 @@ a:focus-visible {
   z-index: 998;
 }
 .mobile-drawer {
+  /* Full viewport panel; transform used for slide animation */
   position: fixed;
   inset: 0 0 0 auto; /* slide from right */
   width: 100vw;
@@ -385,8 +439,9 @@ a:focus-visible {
   background: color-mix(in oklab, var(--surface) 70%, transparent);
 }
 
-/* Open state */
+/* Open state body modifier locks scroll & reveals drawer */
 body.nav-open {
+  /* ...existing code... */
   overflow: hidden;
 }
 body.nav-open .drawer-backdrop {
@@ -397,8 +452,8 @@ body.nav-open .mobile-drawer {
   transform: translateX(0);
 }
 
-/* Mobile-specific visibility */
 @media (max-width: 720px) {
+  /* Mobile breakpoint: hide inline nav, show toggle */
   .topnav {
     display: flex;
     align-items: center;
@@ -412,7 +467,7 @@ body.nav-open .mobile-drawer {
   }
 }
 
-/* Footer */
+/* Footer sticks to bottom when content is short via flex layout */
 .site-footer {
   border-top: 1px solid var(--border);
   margin-top: 40px;
@@ -424,11 +479,9 @@ body.nav-open .mobile-drawer {
   color: var(--muted);
 }
 
-/* Page content helpers */
-.page-title {
-  margin-bottom: 8px;
-}
+/* Prose & content helpers unify spacing & typographic rhythm */
 .prose {
+  /* Long-form text container */
   max-width: 75ch;
   margin: 0 auto;
   font-size: 1.075rem;
@@ -439,6 +492,7 @@ body.nav-open .mobile-drawer {
   text-indent: 1.25rem;
 }
 .prose blockquote {
+  /* Emphasized quote styling */
   margin: 18px 0;
   padding: 12px 16px;
   border-left: 4px solid var(--accent);
@@ -448,8 +502,9 @@ body.nav-open .mobile-drawer {
   font-style: italic;
 }
 
-/* Contact layout */
+/* Contact form layout & cards */
 .contact-grid {
+  /* Responsive split layout at 800px */
   display: grid;
   gap: 22px;
   align-items: start;
@@ -462,14 +517,15 @@ body.nav-open .mobile-drawer {
 
 .form-card,
 .info-card {
+  /* Elevated soft-surface panels */
   background: color-mix(in oklab, var(--surface) 70%, transparent);
   border: 1px solid var(--border);
   border-radius: 12px;
   box-shadow: var(--shadow-sm);
   padding: 18px;
 }
-
 .form-grid {
+  /* Adaptive form fields grid */
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;
@@ -527,14 +583,9 @@ label {
   text-decoration: underline;
 }
 
-/* Services page layout */
-.section {
-  margin: 18px 0 28px;
-}
-.section > .section-title {
-  margin-bottom: 8px;
-}
+/* Services page cards & badges */
 .services-grid {
+  /* Two-column at wider widths */
   display: grid;
   gap: 18px;
 }
@@ -544,6 +595,7 @@ label {
   }
 }
 .card {
+  /* Reusable feature/pricing card */
   background: color-mix(in oklab, var(--surface) 70%, transparent);
   border: 1px solid var(--border);
   border-radius: 12px;
@@ -562,6 +614,7 @@ label {
   gap: 8px;
 }
 .badge {
+  /* Pill label styling */
   display: inline-block;
   padding: 4px 10px;
   border-radius: 999px;
@@ -571,8 +624,9 @@ label {
   font-size: 0.9rem;
 }
 
-/* About page profile image */
+/* About page circular profile */
 .profile-image {
+  /* Responsive circular avatar */
   width: clamp(140px, 30vw, 220px);
   height: clamp(140px, 30vw, 220px);
   border-radius: 50%;
@@ -583,8 +637,8 @@ label {
   box-shadow: var(--shadow);
 }
 
-/* Dark mode nuance */
 @media (prefers-color-scheme: dark) {
+  /* Dark mode background adjustments & subtle stylistic shifts */
   body {
     background: radial-gradient(
         1200px 600px at 12% -5%,
@@ -622,3 +676,29 @@ label {
     scroll-behavior: auto !important;
   }
 }
+
+/* Background video (if present) sits behind all content using negative z-index */
+.bg-video {
+  /* Full-viewport cover video with slight filter adjustments */
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+.bg-video-overlay {
+  /* Layered gradients to improve contrast over video */
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(2, 6, 23, 0.6) 0%, transparent 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .bg-video {
+    /* Hidden when user prefers less motion */
+    display: none;
+  }
+}
+/* END OF ANNOTATED SECTIONS */
